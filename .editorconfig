@@ -1,0 +1,6 @@
+# Indentation override for all JS under src directory
+[src/**.js]
+indent_style = tab
+indent_size = tab
+tab_size = 4
+quote_type = single
