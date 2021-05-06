@@ -1,19 +1,22 @@
 import mongoose from 'mongoose';
 
-const DaySchedule = new mongoose.Schema({
-    day: {
-        type: String,
-        required: true
-    },
-    start_time: {
-        type: Number,
-        required: true
-    },
-    end_time: {
-        type: Number,
-        required: true
-    }
-}, {'_id': false});
+const DaySchedule = new mongoose.Schema(
+	{
+		day: {
+			type: String,
+			required: true,
+		},
+		start_time: {
+			type: Number,
+			required: true,
+		},
+		end_time: {
+			type: Number,
+			required: true,
+		},
+	},
+	{ _id: false }
+);
 
 const CourseSchema = mongoose.Schema({
 	nrc: {
@@ -39,20 +42,19 @@ const CourseSchema = mongoose.Schema({
 	},
 	professors: {
 		//type: [mongoose.Schema.Types.ObjectId],
-        type: [String],
+		type: [String],
 		ref: 'Professors',
 		required: true,
 	},
 	career: {
-		//type: mongoose.Schema.Types.ObjectId,
-        type: String,
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Careers',
 		required: true,
 	},
-    schedule: {
-        type: [DaySchedule],
-        required: true
-    }
+	schedule: {
+		type: [DaySchedule],
+		required: true,
+	},
 });
 
 export default mongoose.model('Courses', CourseSchema);

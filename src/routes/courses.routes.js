@@ -1,64 +1,30 @@
 import express from 'express';
-import Course from '../models/Course.js';
-
+import * as coursesController from '../controllers/courses.controller.js';
 const router = express.Router();
 
 /**
  * Return all the courses
  */
-router.get('/', async (req, res) => {
-	try {
-		const courses = await Course.find();
-		res.json(courses);
-	} catch (error) {
-		res.json({ message: error });
-	}
-});
+router.get('/', coursesController.getCourses);
 
-router.post('/', async (req, res) => {
-	try {
-        const newCourse = new Course(req.body);
-        const course = await newCourse.save();
-        res.status(200).json(course);
-	} catch (error) {
-        res.status(404).json(error);
-    }
-});
+/**
+ * Add a new course
+ */
+router.post('/', coursesController.addCourse);
 
 /**
  * Returns a specific course by nrc
  */
-router.get('/:nrc', async (req, res) => {
-	try {
-		const course = await Course.findOne({ nrc: req.params.nrc });
-		res.json(course);
-	} catch (error) {
-		res.json({ message: error });
-	}
-});
+router.get('/:nrc', coursesController.getCourseById);
 
 /**
- * Returns all courses of a subject
+ * Returns all courses of a career
  */
-router.get('/subj/:subj_code', async (req, res) => {
-	try {
-		const courses = await Course.find({ subj_code: req.params.subj_code });
-		res.json(courses);
-	} catch (error) {
-		res.json({ message: error });
-	}
-});
+router.get('/career/:care_code', coursesController.getCoursesByCareer);
 
 /**
  * Delete a course
  */
-router.delete('/:nrc', async (req, res) => {
-	try {
-		const removedCourse = await Course.remove({ nrc: req.params.nrc });
-		res.json(removedCourse);
-	} catch (error) {
-		res.json({ message: error });
-	}
-});
+router.delete('/:nrc', coursesController.deleteCourse);
 
 export default router;
