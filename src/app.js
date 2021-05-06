@@ -26,7 +26,9 @@ mongoose
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
-	.then(() => console.log('Connected to MongoDB.'))
+	.then(() => {
+		mongoose.set('useFindAndModify', false);
+		console.log('Connected to MongoDB.')})
 	.catch((err) => console.log(err));
 
 /**
@@ -34,11 +36,14 @@ mongoose
  */
 import coursesRoute from './routes/courses.routes.js';
 import careersRoute from './routes/careers.routes.js';
+import studentsRoute from './routes/students.routes.js';
+
 app.get('/api', (req, res) => {
 	res.json({ message: 'Hello World!' });
 });
 app.use('/api/courses', coursesRoute);
 app.use('/api/careers', careersRoute);
+app.use('/api/students', studentsRoute);
 /**
  * Start server
  */

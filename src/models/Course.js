@@ -48,7 +48,7 @@ const CourseSchema = mongoose.Schema({
 	},
 	career: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Careers',
+		ref: 'careers',
 		required: true,
 	},
 	schedule: {
@@ -57,4 +57,4 @@ const CourseSchema = mongoose.Schema({
 	},
 });
 
-export default mongoose.model('Courses', CourseSchema);
+export default mongoose.model('courses', CourseSchema);

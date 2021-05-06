@@ -11,9 +11,9 @@ export const getCourses = async (req, res) => {
 
 export const addCourse = async (req, res) => {
 	try {
-		const newCourse = new Course(req.body);
-		const course = await newCourse.save();
-		res.status(200).json(course);
+		const values = req.body;
+		await Course.insertMany(values);
+		res.status(200).json({success: true});
 	} catch (error) {
 		res.status(404).json(error);
 	}

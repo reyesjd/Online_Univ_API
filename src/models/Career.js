@@ -12,4 +12,4 @@ const careerSchema = new mongoose.Schema({
 	},
 });
 
-export default mongoose.model('Careers', careerSchema);
+export default mongoose.model('careers', careerSchema);

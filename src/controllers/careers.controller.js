@@ -11,10 +11,9 @@ export const getCareers = async (req, res) => {
 
 export const addCareer = async (req, res) => {
 	try {
-		console.log(req.body.name);
-		const newCareer = new Career(req.body);
-		const career = await newCareer.save();
-		res.status(200).json(career);
+		const values = req.body;
+		await Career.insertMany(values);
+		res.status(200).json({ success: true });
 	} catch (error) {
 		res.status(404).json(error);
 	}
