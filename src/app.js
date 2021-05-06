@@ -28,7 +28,8 @@ mongoose
 	})
 	.then(() => {
 		mongoose.set('useFindAndModify', false);
-		console.log('Connected to MongoDB.')})
+		console.log('Connected to MongoDB.');
+	})
 	.catch((err) => console.log(err));
 
 /**
@@ -37,6 +38,7 @@ mongoose
 import coursesRoute from './routes/courses.routes.js';
 import careersRoute from './routes/careers.routes.js';
 import studentsRoute from './routes/students.routes.js';
+import professorsRoute from './routes/professors.routes.js';
 
 app.get('/api', (req, res) => {
 	res.json({ message: 'Hello World!' });
@@ -44,6 +46,7 @@ app.get('/api', (req, res) => {
 app.use('/api/courses', coursesRoute);
 app.use('/api/careers', careersRoute);
 app.use('/api/students', studentsRoute);
+app.use('/api/professors', professorsRoute);
 /**
  * Start server
  */
