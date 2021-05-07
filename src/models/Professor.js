@@ -25,4 +25,4 @@ const ProfessorSchema = mongoose.Schema({
 	},
 });
 
-export default mongoose.model('professor', ProfessorSchema);
+export default mongoose.model('professors', ProfessorSchema);

@@ -2,7 +2,7 @@ import Professor from '../models/Professor.js';
 
 export const getProfessors = async (req, res) => {
 	try {
-		const professors = await Professor.find();
+		const professors = await Professor.find().populate();
 		res.json(professors);
 	} catch (error) {
 		res.json({ message: error });

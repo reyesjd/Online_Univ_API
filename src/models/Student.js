@@ -1,5 +1,17 @@
 import mongoose from 'mongoose';
 
+const studentCourses = new mongoose.Schema(
+	{
+		course: {
+			type: mongoose.Schema.Types.ObjectId,
+			required: true,
+		},
+		grades: {
+			type: [Number],
+		},
+	},
+	{ _id: false }
+);
 const StudentSchema = mongoose.Schema({
 	id: {
 		type: Number,
@@ -40,6 +52,9 @@ const StudentSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'careers',
 		required: true,
+	},
+	courses: {
+		type: [studentCourses],
 	},
 });
 

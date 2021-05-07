@@ -1,4 +1,5 @@
 import Student from '../models/Student.js';
+import Enrollment from '../models/Enrollment.js';
 
 export const getStudents = async (req, res) => {
 	try {
@@ -42,6 +43,16 @@ export const updateStudent = async (req, res) => {
 		const newStudent = req.body;
 		await Student.findOneAndUpdate({ "id": req.params.stud_id }, newStudent);
 		res.status(200).json({ success: true });
+	} catch (error) {
+		res.json({ message: error });
+	}
+};
+
+export const getOldGradesById = async (req, res) => {
+	try {
+		const findStudent = await Student.find({ id: req.params.stud_id });
+		const grades = await Enrollment.find({ student: findStudent }).select("semester finalGrade");
+		res.json(grades);
 	} catch (error) {
 		res.json({ message: error });
 	}

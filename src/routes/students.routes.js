@@ -18,6 +18,11 @@ router.post('/', studentController.addStudent);
 router.get('/:stud_id', studentController.getStudentById);
 
 /**
+ * Returns a student's previous semester grades by their id
+ */
+router.get('/grades/:stud_id', studentController.getOldGradesById);
+
+/**
  * Delete a student
  */
 router.delete('/:stud_id', studentController.deleteStudentById);
