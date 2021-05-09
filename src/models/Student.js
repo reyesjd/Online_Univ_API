@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import bcrypt from 'bcrypt';
 const studentCourses = new mongoose.Schema(
 	{
 		course: {
@@ -57,5 +57,14 @@ const StudentSchema = mongoose.Schema({
 		type: [studentCourses],
 	},
 });
+
+StudentSchema.methods.encryptPassword = async (password) => {
+	const salt = await bcrypt.genSalt();
+	return await bcrypt.hash(password, salt);
+};
+
+StudentSchema.methods.validatePassword = async function (pass) {
+	return await bcrypt.compare(pass, this.password);
+};
 
 export default mongoose.model('students', StudentSchema);

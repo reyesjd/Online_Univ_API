@@ -1,5 +1,7 @@
 import express from 'express';
 import * as studentController from '../controllers/students.controller.js';
+import * as auth from '../controllers/authentication.manager.js';
+
 const router = express.Router();
 
 /**
@@ -12,15 +14,16 @@ router.get('/', studentController.getStudents);
  */
 router.post('/', studentController.addStudent);
 
+router.post('/login', studentController.loginChecker);
 /**
  * Returns a specific student by id
  */
-router.get('/:stud_id', studentController.getStudentById);
+router.get('/info', auth.checkToken, studentController.getStudentById);
 
 /**
  * Returns a student's previous semester grades by their id
  */
-router.get('/grades/:stud_id', studentController.getOldGradesById);
+router.get('/grades/', auth.checkToken, studentController.getOldGradesById);
 
 /**
  * Delete a student
@@ -30,6 +33,6 @@ router.delete('/:stud_id', studentController.deleteStudentById);
 /**
  * Update a student
  */
-router.put('/:stud_id', studentController.updateStudent);
+router.put('/', auth.checkToken, studentController.updateStudent);
 
 export default router;
