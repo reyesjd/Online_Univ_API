@@ -13,8 +13,15 @@ router.get('/', studentController.getStudents);
  * Add a new student
  */
 router.post('/', studentController.addStudent);
-
+/**
+ * Use this route check the user login
+ */
 router.post('/login', studentController.loginChecker);
+
+ /**
+  * Returns all the current courses of an student
+  */
+  router.get('/courses', auth.checkToken, studentController.getCurrentCourses);
 /**
  * Returns a specific student by id
  */

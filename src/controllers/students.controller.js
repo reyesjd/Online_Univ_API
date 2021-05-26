@@ -61,6 +61,14 @@ export const getOldGradesById = async (req, res) => {
 		res.json({ message: error });
 	}
 };
+export const getCurrentCourses = async (req, res) => {
+	try {
+		const findStudent = await Student.find({ id: req.user });
+		res.json(findStudent.courses);
+	} catch (error) {
+		res.json({ message: error });
+	}
+};
 
 export const loginChecker = async (req, res) => {
 	try {
