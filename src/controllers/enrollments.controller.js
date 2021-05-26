@@ -24,8 +24,7 @@ export const addEnrollment = async (req, res) => {
 
 export const getEnrollmentByStudent = async (req, res) => {
 	try {
-		const findStudent = await Student.find({ id: req.params.stud_id });
-		const enrollment = await Enrollment.find({ student: findStudent });
+		const enrollment = await Enrollment.find({ student: req.params.stud_id });
 		res.json(enrollment);
 	} catch (error) {
 		res.json({ message: error });

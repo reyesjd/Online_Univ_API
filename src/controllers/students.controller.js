@@ -24,8 +24,17 @@ export const addStudent = async (req, res) => {
 
 export const getStudentById = async (req, res) => {
 	try {
-		const student = await Student.findOne({ id: req.user });
-		res.json({user: student});
+		const student = await Student.findOne({ id: req.user })
+			.populate('career')
+			.populate({
+				path: 'courses',
+				populate: {
+					path: 'course',
+					model: 'courses',
+				},
+			})
+			.exec();
+		res.json({ user: student });
 	} catch (error) {
 		res.json({ message: error });
 	}
@@ -76,8 +85,13 @@ export const loginChecker = async (req, res) => {
 			username: req.body.username,
 		})
 			.populate('career')
-			.populate('courses')
-			.populate('course')
+			.populate({
+				path: 'courses',
+				populate: {
+					path: 'course',
+					model: 'courses',
+				},
+			})
 			.exec();
 		if (!findStudent) {
 			res.status(401).json({ auth: false, token: null });
