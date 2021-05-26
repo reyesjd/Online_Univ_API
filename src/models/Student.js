@@ -56,6 +56,10 @@ const StudentSchema = mongoose.Schema({
 	courses: {
 		type: [studentCourses],
 	},
+	acc_avg: {
+		type: Number,
+		required: true,
+	}
 });
 
 StudentSchema.methods.encryptPassword = async (password) => {

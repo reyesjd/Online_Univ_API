@@ -24,9 +24,8 @@ export const addStudent = async (req, res) => {
 
 export const getStudentById = async (req, res) => {
 	try {
-		console.log(req.user);
-		const student = await Student.find({ id: req.user });
-		res.json(student);
+		const student = await Student.findOne({ id: req.user });
+		res.json({user: student});
 	} catch (error) {
 		res.json({ message: error });
 	}
@@ -43,7 +42,6 @@ export const deleteStudentById = async (req, res) => {
 
 export const updateStudent = async (req, res) => {
 	try {
-		console.log(req.user);
 		const newStudent = req.body;
 		await Student.findOneAndUpdate({ id: req.user }, newStudent);
 		res.status(200).json({ success: true });
@@ -54,7 +52,6 @@ export const updateStudent = async (req, res) => {
 
 export const getOldGradesById = async (req, res) => {
 	try {
-		console.log(req.user);
 		const findStudent = await Student.find({ id: req.user });
 		const grades = await Enrollment.find({ student: findStudent }).select(
 			'semester finalGrade'
@@ -67,9 +64,14 @@ export const getOldGradesById = async (req, res) => {
 
 export const loginChecker = async (req, res) => {
 	try {
-		const findStudent = await Student.findOne({ username: req.body.username });
+		const findStudent = await Student.findOne({
+			username: req.body.username,
+		})
+			.populate('career')
+			.populate('courses')
+			.populate('course')
+			.exec();
 		if (!findStudent) {
-			console.log('esta aca');
 			res.status(401).json({ auth: false, token: null });
 		} else {
 			const passwordIsValid = await findStudent.validatePassword(
@@ -79,7 +81,9 @@ export const loginChecker = async (req, res) => {
 				res.status(401).json({ auth: false, token: null });
 			} else {
 				const newToken = auth.createToken(findStudent);
-				res.status(200).json({ auth: true, token: newToken });
+				res
+					.status(200)
+					.json({ auth: true, token: newToken, user: findStudent });
 			}
 		}
 	} catch (error) {
