@@ -31,6 +31,10 @@ export const getStudentById = async (req, res) => {
 				populate: {
 					path: 'course',
 					model: 'courses',
+					populate: {
+						path: 'professor',
+						model: 'professors'
+					}
 				},
 			})
 			.exec();
@@ -90,6 +94,13 @@ export const loginChecker = async (req, res) => {
 				populate: {
 					path: 'course',
 					model: 'courses',
+				},
+			})
+			.populate({
+				path: 'course',
+				populate: {
+					path: 'professors',
+					model: 'professors',
 				},
 			})
 			.exec();
