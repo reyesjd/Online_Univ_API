@@ -3,7 +3,7 @@ import * as studentController from '../controllers/students.controller.js';
 import * as auth from '../controllers/authentication.manager.js';
 
 const router = express.Router();
-
+print(router);
 /**
  * Return all the students
  */
